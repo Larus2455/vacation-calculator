@@ -5,7 +5,7 @@
 
 ## Технологии
 - Spring Boot 4.0.2
-- Java 17
+- Java
 - Maven
 
 ## Как запустить
