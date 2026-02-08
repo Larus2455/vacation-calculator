@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор отпускных | Neoflex</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .background-dots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#444 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.15;
+            z-index: -3;
+        }
+
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(233, 30, 99, 0.15), transparent 30%),
+            radial-gradient(circle at 70% 70%, rgba(255, 87, 34, 0.1), transparent 35%);
+            z-index: -2;
+        }
+
+        .neoflex-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .neoflex-element {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            user-select: none;
+            animation: float 24s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.2; }
+            25% { transform: translate(50px, 50px) rotate(90deg); opacity: 0.4; }
+            50% { transform: translate(100px, -30px) rotate(180deg); opacity: 0.3; }
+            75% { transform: translate(-40px, 80px) rotate(270deg); opacity: 0.5; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.2; }
+        }
+
+        .card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45),
+            0 0 40px rgba(233, 30, 99, 0.25),
+            0 0 30px rgba(255, 87, 34, 0.2);
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+            padding: 32px;
+            z-index: 10;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55),
+            0 0 50px rgba(233, 30, 99, 0.35),
+            0 0 40px rgba(255, 87, 34, 0.3);
+        }
+
+        .edge-animation {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #e91e63, #ff5722, #ff9800, transparent);
+            z-index: 5;
+        }
+
+        .edge-top {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            animation: edge-slide 8s infinite linear paused;
+        }
+
+        .edge-right {
+            top: 0;
+            right: 0;
+            width: 3px;
+            height: 100%;
+            animation: edge-slide 10s infinite linear 2s paused;
+        }
+
+        .edge-bottom {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            animation: edge-slide 12s infinite linear 4s paused;
+        }
+
+        .edge-left {
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            animation: edge-slide 14s infinite linear 6s paused;
+        }
+
+        @keyframes edge-slide {
+            0% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(100%) translateY(100%); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #e91e63, #ff5722);
+            border-radius: 2px;
+        }
+
+        .neoflex-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e91e63, #ff5722);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .neoflex-logo-icon {
+            font-size: 36px;
+            color: white;
+        }
+
+        .card-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #e91e63, #ff5722, #ff9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(233, 30, 99, 0.2);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group label i {
+            color: #e91e63;
+            font-size: 18px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 14px;
+            padding: 12px 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: #e91e63;
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.15);
+        }
+
+        .input-wrapper i {
+            color: #999;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+        .input-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            outline: none;
+            padding: 4px 0;
+        }
+
+        .input-wrapper input::placeholder {
+            color: #aaa;
+            font-weight: 400;
+        }
+
+        .input-wrapper input[type="number"]::-webkit-outer-spin-button,
+        .input-wrapper input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-wrapper input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .calculate-btn, .reset-btn, .back-button {
+            padding: 16px 24px;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(90deg, #e91e63, #ff5722);
+            color: white;
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .calculate-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.55);
+        }
+
+        .calculate-btn:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+
+        .calculate-btn:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            transform: none;
+        }
+
+        .reset-btn {
+            background: linear-gradient(90deg, #9e9e9e, #616161);
+            color: white;
+            box-shadow: 0 6px 20px rgba(158, 158, 158, 0.3);
+        }
+
+        .reset-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(158, 158, 158, 0.45);
+        }
+
+        .reset-btn:active {
+            transform: scale(0.98);
+        }
+
+        .back-button {
+            background: linear-gradient(90deg, #2196f3, #21cbf3);
+            color: white;
+            margin-top: 16px;
+            align-self: center;
+            width: fit-content;
+            padding: 12px 28px;
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.35);
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+        }
+
+        .back-button:active {
+            transform: scale(1);
+        }
+
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 16px;
+            margin-top: 16px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(233, 30, 99, 0.2);
+            border-top-color: #e91e63;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading span {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e91e63;
+        }
+
+        .error {
+            display: none;
+            padding: 16px;
+            background: rgba(255, 235, 238, 0.95);
+            border-left: 4px solid #f44336;
+            border-radius: 0 12px 12px 0;
+            color: #d32f2f;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 16px;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        #result {
+            display: none;
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.08), rgba(255, 87, 34, 0.08));
+            border-radius: 20px;
+            padding: 28px;
+            text-align: center;
+            margin-top: 16px;
+            border: 2px solid rgba(233, 30, 99, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        #result h3 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: #e91e63;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-size: 18px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: #e91e63;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 20px;
+            border-radius: 16px;
+            min-width: 180px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: #777;
+            font-size: 15px;
+        }
+
+        .footer strong {
+            color: #e91e63;
+            font-weight: 700;
+        }
+
+        @media (max-width: 650px) {
+            .card {
+                padding: 24px;
+                margin: 16px;
+            }
+
+            .card-header h1 {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .input-wrapper input {
+                font-size: 16px;
+            }
+
+            .calculate-btn, .reset-btn {
+                padding: 14px;
+                font-size: 16px;
+            }
+
+            .result-value {
+                font-size: 24px;
+                min-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="background-dots"></div>
+<div class="background-gradient"></div>
+<div class="neoflex-elements" id="neoflexElements"></div>
+
+<div class="card">
+    <div class="edge-animation edge-top"></div>
+    <div class="edge-animation edge-right"></div>
+    <div class="edge-animation edge-bottom"></div>
+    <div class="edge-animation edge-left"></div>
+
+    <div class="card-header">
+        <div class="neoflex-logo">
+            <i class="fas fa-calculator neoflex-logo-icon"></i>
+        </div>
+        <h1>Калькулятор отпускных</h1>
+        <p class="subtitle">Точный расчёт с учётом праздников и выходных дней</p>
+    </div>
+
+    <div class="card-body">
+        <div class="form-group">
+            <label for="salary">
+                <i class="fas fa-coins"></i>
+                Средняя зарплата за 12 месяцев
+            </label>
+            <div class="input-wrapper">
+                <i class="fas fa-ruble-sign"></i>
+                <input type="number" id="salary" placeholder="Например: 60000" min="1" step="100">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="days">
+                <i class="fas fa-umbrella-beach"></i>
+                Количество дней отпуска
+            </label>
+            <div class="input-wrapper">
+                <i class="fas fa-calendar-days"></i>
+                <input type="number" id="days" placeholder="Например: 14" min="1" max="365">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="date">
+                <i class="fas fa-calendar-plus"></i>
+                Дата начала отпуска (опционально)
+            </label>
+            <div class="input-wrapper">
+                <i class="fas fa-calendar-days"></i>
+                <input type="date" id="date">
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <button class="calculate-btn" onclick="calculate()" id="calculateBtn">
+                <span>
+                    <i class="fas fa-equals"></i> Рассчитать отпускные
+                </span>
+            </button>
+            <button class="reset-btn" onclick="resetForm()">
+                <span>
+                    <i class="fas fa-undo"></i> Сбросить данные
+                </span>
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <span>Выполняем расчёт...</span>
+        </div>
+
+        <div class="error" id="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="errorMessage">Ошибка</span>
+        </div>
+
+        <div id="result">
+            <h3><i class="fas fa-money-bill-wave"></i> Результат расчёта</h3>
+            <div class="result-item">
+                <span class="result-label">Сумма отпускных:</span>
+                <span class="result-value" id="payResult">0.00 ₽</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Фактически оплаченных дней:</span>
+                <span class="result-value" id="daysResult">0</span>
+            </div>
+            <button class="back-button" onclick="goBack()">
+                <span>
+                    <i class="fas fa-arrow-left"></i> Вернуться к калькулятору
+                </span>
+            </button>
+        </div>
+
+        <div class="footer">
+            <p>Приложение разработано для учебного центра <strong>Neoflex</strong></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function createNeoflexElements() {
+        const container = document.getElementById('neoflexElements');
+        const neoSymbols = [
+            '{', '}', '<', '>', '[', ']', '(', ')',
+            '◇', '◈', '◆', '⬡', '⬢', '◉', '◎',
+            '0', '1', '0', '1', '0', '1', '0', '1',
+            '#', '@', '$', '~', '^', '|', '&', '*',
+            'neo', 'flex', 'code', 'byte', 'data',
+            'dev', 'tech', 'algo', 'func', 'var',
+            '{neo}', '{flex}', '{code}', '{byte}',
+            '<neo>', '<flex>', '<code>', '<byte>',
+            'neo()', 'flex()', 'code()', 'byte()',
+            'NEO', 'FLEX', 'NEO/FLEX', 'NEO FLEX',
+            'neo/flex', 'neo-flex', 'neo_flex',
+            'AI', 'ML', 'DL', 'NN', 'API', 'SQL', 'JS', 'PY'
+        ];
+        for (let i = 0; i < 50; i++) {
+            const element = document.createElement('div');
+            element.className = 'neoflex-element';
+            const symbol = neoSymbols[Math.floor(Math.random() * neoSymbols.length)];
+            element.textContent = symbol;
+            let fontSize;
+            if (symbol.length > 5) {
+                fontSize = Math.random() * 12 + 8;
+            } else if (symbol.length > 2) {
+                fontSize = Math.random() * 16 + 10;
+            } else {
+                fontSize = Math.random() * 22 + 12;
+            }
+            element.style.fontSize = `${fontSize}px`;
+            element.style.left = `${Math.random() * 100}%`;
+            element.style.top = `${Math.random() * 100}%`;
+            element.style.animationDelay = `${Math.random() * 28}s`;
+            element.style.animationDuration = `${Math.random() * 14 + 24}s`;
+            const colors = [
+                '#e91e63', '#ff5722', '#ff9800', '#ffc107',
+                '#ff7043', '#ff5252', '#f44336', '#d84315',
+                '#333333', '#555555', '#777777'
+            ];
+            element.style.color = colors[Math.floor(Math.random() * colors.length)];
+            element.style.opacity = `${Math.random() * 0.4 + 0.2}`;
+            container.appendChild(element);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        createNeoflexElements();
+        const card = document.querySelector('.card');
+        card.addEventListener('mouseenter', () => {
+            document.querySelectorAll('.edge-animation').forEach(edge => {
+                edge.style.animationPlayState = 'running';
+            });
+        });
+        card.addEventListener('mouseleave', () => {
+            document.querySelectorAll('.edge-animation').forEach(edge => {
+                edge.style.animationPlayState = 'paused';
+            });
+        });
+    });
+
+    // Добавляем переменную для отслеживания текущего запроса
+    let currentRequest = null;
+
+    function calculate() {
+        const salary = document.getElementById('salary').value;
+        const days = document.getElementById('days').value;
+        const date = document.getElementById('date').value;
+        const calculateBtn = document.getElementById('calculateBtn');
+        const loading = document.getElementById('loading');
+        const errorDiv = document.getElementById('error');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultDiv = document.getElementById('result');
+        const payResult = document.getElementById('payResult');
+        const daysResult = document.getElementById('daysResult');
+
+        // Скрываем предыдущие результаты и ошибки
+        resultDiv.style.display = 'none';
+        errorDiv.style.display = 'none';
+
+        // Валидация полей
+        if (!salary || !days) {
+            showError('Пожалуйста, заполните зарплату и количество дней отпуска');
+            return;
+        }
+
+        if (parseFloat(salary) <= 0) {
+            showError('Зарплата должна быть больше нуля');
+            return;
+        }
+
+        if (parseInt(days) <= 0) {
+            showError('Количество дней должно быть больше нуля');
+            return;
+        }
+
+        // Отключаем кнопку и показываем загрузку
+        calculateBtn.disabled = true;
+        loading.style.display = 'flex';
+
+        // Формируем строку запроса с параметрами
+        // ВАЖНО: именно "/calculacte" с опечаткой из задания Неофлекс!
+        let url = `/calculacte?averageSalary=${encodeURIComponent(salary)}&vacationDays=${encodeURIComponent(days)}`;
+
+        // Добавляем дату, если она указана
+        if (date) {
+            url += `&startDate=${encodeURIComponent(date)}`;
+        }
+
+        // Отменяем предыдущий запрос, если он существует
+        if (currentRequest) {
+            currentRequest.abort();
+        }
+
+        // Создаем новый AbortController для возможности отмены запроса
+        const controller = new AbortController();
+        currentRequest = controller;
+
+        // Отправляем запрос на сервер Spring Boot
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            signal: controller.signal
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        throw new Error(data.message || `Ошибка сервера: ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Показываем результат
+                payResult.textContent = `${data.vacationPay.toFixed(2)} ₽`;
+                daysResult.textContent = data.actualWorkingDays || data.vacationDays;
+
+                resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            })
+            .catch(error => {
+                // Игнорируем ошибки отмены запроса
+                if (error.name === 'AbortError') return;
+
+                // Обработка ошибок
+                console.error('Ошибка при расчёте:', error);
+                showError(error.message || 'Не удалось выполнить расчёт. Проверьте данные и попробуйте снова.');
+            })
+            .finally(() => {
+                // Включаем кнопку и скрываем загрузку
+                calculateBtn.disabled = false;
+                loading.style.display = 'none';
+                currentRequest = null;
+            });
+    }
+
+    function resetForm() {
+        // Отменяем текущий запрос, если он выполняется
+        if (currentRequest) {
+            currentRequest.abort();
+            currentRequest = null;
+        }
+
+        // Скрываем все вспомогательные блоки
+        document.getElementById('result').style.display = 'none';
+        document.getElementById('error').style.display = 'none';
+        document.getElementById('loading').style.display = 'none';
+
+        // Включаем кнопку расчёта
+        document.getElementById('calculateBtn').disabled = false;
+
+        // Очищаем поля ввода
+        document.getElementById('salary').value = '';
+        document.getElementById('days').value = '';
+        document.getElementById('date').value = '';
+
+        // Устанавливаем фокус на первое поле
+        document.getElementById('salary').focus();
+
+        // Анимация кнопки сброса
+        const resetBtn = document.querySelector('.reset-btn');
+        resetBtn.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            resetBtn.style.transform = 'scale(1)';
+        }, 200);
+    }
+
+    function goBack() {
+        // Отменяем текущий запрос, если он выполняется
+        if (currentRequest) {
+            currentRequest.abort();
+            currentRequest = null;
+        }
+
+        // Скрываем блок результата
+        document.getElementById('result').style.display = 'none';
+
+        // Также скрываем блоки ошибок и загрузки на всякий случай
+        document.getElementById('error').style.display = 'none';
+        document.getElementById('loading').style.display = 'none';
+
+        // Включаем кнопку расчёта
+        document.getElementById('calculateBtn').disabled = false;
+
+        // Прокручиваем страницу вверх
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+        // Устанавливаем фокус на поле зарплаты
+        document.getElementById('salary').focus();
+    }
+
+    function showError(message) {
+        const errorDiv = document.getElementById('error');
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = message;
+        errorDiv.style.display = 'flex';
+
+        // Автоматически скрываем ошибку через 5 секунд
+        setTimeout(() => {
+            if (errorDiv.style.display === 'flex') {
+                errorDiv.style.display = 'none';
+            }
+        }, 5000);
+    }
+
+    // Обработка нажатия Enter для расчёта
+    document.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            // Проверяем, не находится ли фокус на кнопке сброса
+            if (document.activeElement !== document.querySelector('.reset-btn')) {
+                calculate();
+            }
+        }
+    });
+
+    // Запуск анимации краёв карточки при загрузке
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.querySelectorAll('.edge-animation').forEach(edge => {
+                edge.style.animationPlayState = 'running';
+            });
+        }, 500);
+    });
+</script>
+</body>
+</html>

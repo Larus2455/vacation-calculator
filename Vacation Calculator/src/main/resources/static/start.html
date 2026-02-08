@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neoflex - Калькулятор отпускных</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        *
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root
+        {
+            --neoflex-primary: #e91e63;
+            --neoflex-secondary: #ff5722;
+            --neoflex-accent: #ff9800;
+            --neoflex-dark: #2c1a2e;
+            --neoflex-light: #f8f9fc;
+            --neoflex-gray: #7a8ca5;
+            --neoflex-border-radius: 16px;
+            --transition-ease: cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.15);
+            --shadow-neo: 0 10px 30px rgba(233, 30, 99, 0.25);
+        }
+
+        body
+        {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f9fbfd 0%, #eef2f8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2d3748;
+            line-height: 1.6;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before
+        {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                    radial-gradient(circle at 20% 30%, rgba(233, 30, 99, 0.04) 0%, transparent 25%),
+                    radial-gradient(circle at 80% 70%, rgba(255, 152, 0, 0.04) 0%, transparent 25%),
+                    radial-gradient(circle at 50% 50%, rgba(255, 87, 34, 0.02) 0%, transparent 35%);
+            z-index: -2;
+        }
+
+        .welcome-container
+        {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: var(--neoflex-border-radius);
+            box-shadow: var(--shadow-lg);
+            padding: 56px 48px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: containerSlide 0.8s var(--transition-ease) forwards;
+            border: 1px solid rgba(233, 30, 99, 0.08);
+            overflow: hidden;
+        }
+
+        .welcome-container::before
+        {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--neoflex-primary), var(--neoflex-secondary), var(--neoflex-accent));
+            z-index: 1;
+        }
+
+        @keyframes containerSlide
+        {
+            from
+            {
+                opacity: 0;
+                transform: translateY(30px) scale(0.97);
+            }
+            to
+            {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .logo-container
+        {
+            margin-bottom: 32px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .welcome-logo
+        {
+            width: 180px;
+            height: 180px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.08) 0%, rgba(255, 87, 34, 0.08) 100%);
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s var(--transition-ease);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(233, 30, 99, 0.12);
+        }
+
+        .welcome-logo::after
+        {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg,
+            rgba(233, 30, 99, 0.08) 0%,
+            rgba(255, 87, 34, 0.08) 50%,
+            rgba(255, 152, 0, 0.08) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .welcome-logo:hover
+        {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: var(--shadow-neo), var(--shadow-lg);
+        }
+
+        .welcome-logo:hover::after
+        {
+            opacity: 1;
+        }
+
+        .welcome-logo-image
+        {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            transition: transform 0.5s var(--transition-ease);
+        }
+
+        .welcome-logo:hover .welcome-logo-image
+        {
+            transform: scale(1.08) rotate(2deg);
+        }
+
+        h1
+        {
+            font-family: 'Manrope', 'Inter', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, var(--neoflex-primary), var(--neoflex-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after
+        {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neoflex-primary), var(--neoflex-accent));
+            border-radius: 2px;
+            opacity: 0.85;
+        }
+
+        .subtitle
+        {
+            font-size: 1.45rem;
+            color: var(--neoflex-dark);
+            margin-bottom: 28px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .description
+        {
+            max-width: 680px;
+            margin: 0 auto 42px;
+            color: var(--neoflex-gray);
+            font-size: 1.15rem;
+            line-height: 1.7;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            position: relative;
+            padding: 0 12px;
+        }
+
+        .description::before,
+        .description::after
+        {
+            content: '"';
+            font-family: 'Manrope', serif;
+            font-size: 3.5rem;
+            color: rgba(233, 30, 99, 0.12);
+            position: absolute;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .description::before
+        {
+            top: -20px;
+            left: -15px;
+        }
+
+        .description::after
+        {
+            content: '"';
+            bottom: -40px;
+            right: -15px;
+            transform: rotate(180deg);
+        }
+
+        .enter-button
+        {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 48px;
+            background: linear-gradient(135deg, var(--neoflex-primary), var(--neoflex-secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.35s var(--transition-ease);
+            box-shadow: var(--shadow-neo);
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            min-width: 240px;
+        }
+
+        .enter-button::before
+        {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--neoflex-secondary), var(--neoflex-accent));
+            z-index: -1;
+            transition: opacity 0.35s ease;
+            opacity: 0;
+        }
+
+        .enter-button:hover::before
+        {
+            opacity: 1;
+        }
+
+        .enter-button:hover
+        {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(233, 30, 99, 0.35);
+            letter-spacing: 0.8px;
+        }
+
+        .enter-button:active
+        {
+            transform: translateY(1px);
+            box-shadow: 0 6px 16px rgba(233, 30, 99, 0.25);
+        }
+
+        .enter-button i
+        {
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .enter-button:hover i
+        {
+            transform: translateX(4px);
+        }
+
+        .footer
+        {
+            margin-top: 48px;
+            color: var(--neoflex-gray);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            position: relative;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .footer::before
+        {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neoflex-primary), var(--neoflex-accent));
+            border-radius: 3px;
+        }
+
+        .neoflex-badge
+        {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(233, 30, 99, 0.08);
+            color: var(--neoflex-primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        .neoflex-badge i
+        {
+            font-size: 1.1rem;
+        }
+
+        .transition-overlay
+        {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--neoflex-primary), var(--neoflex-secondary), var(--neoflex-accent));
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s var(--transition-ease);
+        }
+
+        .transition-logo
+        {
+            width: 140px;
+            height: 140px;
+            border-radius: 20px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.6) rotate(-15deg);
+            transition: all 0.6s var(--transition-ease);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .transition-logo::after
+        {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0) 50%,
+            rgba(255, 255, 255, 0.2) 100%);
+            transform: rotate(45deg) translateX(-100%);
+            animation: shine 1.5s ease-in-out forwards;
+        }
+
+        @keyframes shine
+        {
+            to
+            {
+                transform: rotate(45deg) translateX(100%);
+            }
+        }
+
+        .transition-logo img
+        {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.2s;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+        }
+
+        .animate-fade
+        {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.6s var(--transition-ease);
+        }
+
+        .animate-fade.visible
+        {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-delay-1
+        {
+            transition-delay: 0.15s;
+        }
+
+        .animate-delay-2
+        {
+            transition-delay: 0.3s;
+        }
+
+        .animate-delay-3
+        {
+            transition-delay: 0.45s;
+        }
+
+        .animate-delay-4
+        {
+            transition-delay: 0.6s;
+        }
+
+        .decoration
+        {
+            position: absolute;
+            opacity: 0.06;
+            z-index: 0;
+        }
+
+        .decoration-1
+        {
+            top: 10%;
+            right: 5%;
+            font-size: 12rem;
+            transform: rotate(15deg);
+            color: var(--neoflex-primary);
+        }
+
+        .decoration-2
+        {
+            bottom: 15%;
+            left: 5%;
+            font-size: 10rem;
+            transform: rotate(-25deg);
+            color: var(--neoflex-accent);
+        }
+
+        @media (max-width: 768px)
+        {
+            .welcome-container
+            {
+                padding: 40px 32px;
+                margin: 16px;
+            }
+
+            h1
+            {
+                font-size: 2.4rem;
+            }
+
+            .subtitle
+            {
+                font-size: 1.3rem;
+            }
+
+            .description
+            {
+                font-size: 1.05rem;
+                margin-bottom: 36px;
+            }
+
+            .enter-button
+            {
+                padding: 16px 40px;
+                font-size: 1.15rem;
+                min-width: 220px;
+            }
+
+            .welcome-logo
+            {
+                width: 150px;
+                height: 150px;
+            }
+
+            .welcome-logo-image
+            {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 480px)
+        {
+            .welcome-container
+            {
+                padding: 32px 24px;
+            }
+
+            h1
+            {
+                font-size: 2.1rem;
+            }
+
+            .subtitle
+            {
+                font-size: 1.15rem;
+                margin-bottom: 24px;
+            }
+
+            .description
+            {
+                font-size: 1rem;
+                margin-bottom: 32px;
+            }
+
+            .enter-button
+            {
+                padding: 15px 36px;
+                font-size: 1.1rem;
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .welcome-logo
+            {
+                width: 130px;
+                height: 130px;
+            }
+
+            .welcome-logo-image
+            {
+                width: 80px;
+                height: 80px;
+            }
+
+            .footer
+            {
+                margin-top: 36px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="decoration decoration-1">
+    <i class="fas fa-calculator"></i>
+</div>
+<div class="decoration decoration-2">
+    <i class="fas fa-chart-line"></i>
+</div>
+
+<div class="welcome-container">
+    <div class="logo-container animate-fade" id="logoContainer">
+        <a href="https://www.neoflex.ru" target="_blank" class="welcome-logo-link">
+            <div class="welcome-logo" id="welcomeLogo" onclick="enterApp()">
+                <img src="Neoflex.png" class="welcome-logo-image" alt="Neoflex Logo">
+            </div>
+        </a>
+    </div>
+
+    <h1 class="animate-fade animate-delay-1">Калькулятор отпускных</h1>
+
+    <p class="subtitle animate-fade animate-delay-2">Точный расчёт отпускных с учётом праздников и выходных дней</p>
+
+    <p class="description animate-fade animate-delay-3">
+        Простой и надёжный инструмент для расчёта отпускных выплат в соответствии с Трудовым кодексом РФ.
+        Введите средний заработок и количество дней отпуска — получите точный результат за секунды.
+    </p>
+
+    <button class="enter-button animate-fade animate-delay-4" onclick="enterApp()">
+        Начать расчёт <i class="fas fa-arrow-right"></i>
+    </button>
+
+    <div class="neoflex-badge animate-fade animate-delay-4">
+        <i class="fas fa-graduation-cap"></i> Учебный проект Neoflex
+    </div>
+
+    <div class="footer animate-fade animate-delay-4">
+        <p>Приложение разработано в рамках образовательной программы Neoflex</p>
+    </div>
+</div>
+
+<div class="transition-overlay" id="transitionOverlay">
+    <div class="transition-logo">
+        <img src="Neoflex.png" alt="Neoflex">
+    </div>
+</div>
+
+<script>
+    function enterApp()
+    {
+        const overlay = document.getElementById('transitionOverlay');
+        const logo = overlay.querySelector('.transition-logo');
+        const logoImg = logo.querySelector('img');
+
+        overlay.style.opacity = '1';
+
+        setTimeout(() =>
+        {
+            logo.style.opacity = '1';
+            logo.style.transform = 'scale(1.8) rotate(0deg)';
+            logoImg.style.opacity = '1';
+
+            setTimeout(() =>
+            {
+                logo.style.transform = 'scale(2.2) rotate(10deg)';
+                setTimeout(() =>
+                {
+                    window.location.href = 'calculator.html';
+                }, 400);
+            }, 300);
+        }, 150);
+    }
+
+    document.addEventListener('DOMContentLoaded', () =>
+    {
+        const animateElements = document.querySelectorAll('.animate-fade');
+
+        animateElements.forEach((el, index) =>
+        {
+            setTimeout(() =>
+            {
+                el.classList.add('visible');
+            }, 200 + (index * 100));
+        });
+
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.8s ease';
+        setTimeout(() =>
+        {
+            document.body.style.opacity = '1';
+        }, 100);
+    });
+</script>
+</body>
+</html>
