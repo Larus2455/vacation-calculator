@@ -6,14 +6,14 @@
     <title>Калькулятор отпускных | Neoflex</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * 
+        *
         {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body 
+        body
         {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a2a6c, #2c3e50);
@@ -26,7 +26,7 @@
             overflow-x: hidden;
         }
 
-        .background-dots 
+        .background-dots
         {
             position: fixed;
             top: 0;
@@ -39,7 +39,7 @@
             z-index: -3;
         }
 
-        .background-gradient 
+        .background-gradient
         {
             position: fixed;
             top: 0;
@@ -51,7 +51,7 @@
             z-index: -2;
         }
 
-        .neoflex-elements 
+        .neoflex-elements
         {
             position: fixed;
             top: 0;
@@ -62,7 +62,7 @@
             z-index: -1;
         }
 
-        .neoflex-element 
+        .neoflex-element
         {
             position: absolute;
             font-family: 'Courier New', monospace;
@@ -72,7 +72,7 @@
             z-index: -1;
         }
 
-        @keyframes float 
+        @keyframes float
         {
             0% { transform: translate(0, 0) rotate(0deg); opacity: 0.2; }
             25% { transform: translate(50px, 50px) rotate(90deg); opacity: 0.4; }
@@ -81,7 +81,7 @@
             100% { transform: translate(0, 0) rotate(360deg); opacity: 0.2; }
         }
 
-        .card 
+        .card
         {
             position: relative;
             background: rgba(255, 255, 255, 0.92);
@@ -97,7 +97,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .card:hover 
+        .card:hover
         {
             transform: translateY(-5px);
             box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55),
@@ -105,14 +105,14 @@
             0 0 40px rgba(255, 87, 34, 0.3);
         }
 
-        .edge-animation 
+        .edge-animation
         {
             position: absolute;
             background: linear-gradient(90deg, transparent, #e91e63, #ff5722, #ff9800, transparent);
             z-index: 5;
         }
 
-        .edge-top 
+        .edge-top
         {
             top: 0;
             left: 0;
@@ -121,7 +121,7 @@
             animation: edge-slide 8s infinite linear paused;
         }
 
-        .edge-right 
+        .edge-right
         {
             top: 0;
             right: 0;
@@ -130,7 +130,7 @@
             animation: edge-slide 10s infinite linear 2s paused;
         }
 
-        .edge-bottom 
+        .edge-bottom
         {
             bottom: 0;
             left: 0;
@@ -139,7 +139,7 @@
             animation: edge-slide 12s infinite linear 4s paused;
         }
 
-        .edge-left 
+        .edge-left
         {
             top: 0;
             left: 0;
@@ -148,14 +148,14 @@
             animation: edge-slide 14s infinite linear 6s paused;
         }
 
-        @keyframes edge-slide 
+        @keyframes edge-slide
         {
             0% { transform: translateX(0) translateY(0); }
             50% { transform: translateX(100%) translateY(100%); }
             100% { transform: translateX(0) translateY(0); }
         }
 
-        .card-header 
+        .card-header
         {
             text-align: center;
             margin-bottom: 32px;
@@ -163,7 +163,7 @@
             padding-bottom: 20px;
         }
 
-        .card-header::after 
+        .card-header::after
         {
             content: '';
             position: absolute;
@@ -176,7 +176,7 @@
             border-radius: 2px;
         }
 
-        .neoflex-logo 
+        .neoflex-logo
         {
             width: 80px;
             height: 80px;
@@ -189,13 +189,13 @@
             box-shadow: 0 8px 20px rgba(233, 30, 99, 0.4);
         }
 
-        .neoflex-logo-icon 
+        .neoflex-logo-icon
         {
             font-size: 36px;
             color: white;
         }
 
-        .card-header h1 
+        .card-header h1
         {
             font-size: 32px;
             font-weight: 700;
@@ -206,7 +206,7 @@
             text-shadow: 0 2px 10px rgba(233, 30, 99, 0.2);
         }
 
-        .subtitle 
+        .subtitle
         {
             font-size: 18px;
             color: #666;
@@ -214,21 +214,21 @@
             font-weight: 500;
         }
 
-        .card-body 
+        .card-body
         {
             display: flex;
             flex-direction: column;
             gap: 24px;
         }
 
-        .form-group 
+        .form-group
         {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
 
-        .form-group label 
+        .form-group label
         {
             font-size: 16px;
             font-weight: 600;
@@ -238,13 +238,13 @@
             gap: 10px;
         }
 
-        .form-group label i 
+        .form-group label i
         {
             color: #e91e63;
             font-size: 18px;
         }
 
-        .input-wrapper 
+        .input-wrapper
         {
             position: relative;
             display: flex;
@@ -256,20 +256,20 @@
             transition: border-color 0.3s ease;
         }
 
-        .input-wrapper:focus-within 
+        .input-wrapper:focus-within
         {
             border-color: #e91e63;
             box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.15);
         }
 
-        .input-wrapper i 
+        .input-wrapper i
         {
             color: #999;
             font-size: 18px;
             margin-right: 12px;
         }
 
-        .input-wrapper input 
+        .input-wrapper input
         {
             flex: 1;
             border: none;
@@ -281,25 +281,25 @@
             padding: 4px 0;
         }
 
-        .input-wrapper input::placeholder 
+        .input-wrapper input::placeholder
         {
             color: #aaa;
             font-weight: 400;
         }
 
         .input-wrapper input[type="number"]::-webkit-outer-spin-button,
-        .input-wrapper input[type="number"]::-webkit-inner-spin-button 
+        .input-wrapper input[type="number"]::-webkit-inner-spin-button
         {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        .input-wrapper input[type="number"] 
+        .input-wrapper input[type="number"]
         {
             -moz-appearance: textfield;
         }
 
-        .buttons-container 
+        .buttons-container
         {
             display: flex;
             flex-direction: column;
@@ -307,7 +307,7 @@
             margin-top: 8px;
         }
 
-        .calculate-btn, .reset-btn, .back-button 
+        .calculate-btn, .reset-btn, .back-button
         {
             padding: 16px 24px;
             border: none;
@@ -324,50 +324,50 @@
             overflow: hidden;
         }
 
-        .calculate-btn 
+        .calculate-btn
         {
             background: linear-gradient(90deg, #e91e63, #ff5722);
             color: white;
             box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
         }
 
-        .calculate-btn:hover:not(:disabled) 
+        .calculate-btn:hover:not(:disabled)
         {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(233, 30, 99, 0.55);
         }
 
-        .calculate-btn:active:not(:disabled) 
+        .calculate-btn:active:not(:disabled)
         {
             transform: translateY(1px);
         }
 
-        .calculate-btn:disabled 
+        .calculate-btn:disabled
         {
             opacity: 0.7;
             cursor: wait;
             transform: none;
         }
 
-        .reset-btn 
+        .reset-btn
         {
             background: linear-gradient(90deg, #9e9e9e, #616161);
             color: white;
             box-shadow: 0 6px 20px rgba(158, 158, 158, 0.3);
         }
 
-        .reset-btn:hover 
+        .reset-btn:hover
         {
             transform: scale(1.03);
             box-shadow: 0 8px 25px rgba(158, 158, 158, 0.45);
         }
 
-        .reset-btn:active 
+        .reset-btn:active
         {
             transform: scale(0.98);
         }
 
-        .back-button 
+        .back-button
         {
             background: linear-gradient(90deg, #2196f3, #21cbf3);
             color: white;
@@ -378,18 +378,18 @@
             box-shadow: 0 6px 20px rgba(33, 150, 243, 0.35);
         }
 
-        .back-button:hover 
+        .back-button:hover
         {
             transform: scale(1.05);
             box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
         }
 
-        .back-button:active 
+        .back-button:active
         {
             transform: scale(1);
         }
 
-        .loading 
+        .loading
         {
             display: none;
             flex-direction: column;
@@ -401,7 +401,7 @@
             margin-top: 16px;
         }
 
-        .loading-spinner 
+        .loading-spinner
         {
             width: 40px;
             height: 40px;
@@ -411,19 +411,19 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin 
+        @keyframes spin
         {
             to { transform: rotate(360deg); }
         }
 
-        .loading span 
+        .loading span
         {
             font-size: 18px;
             font-weight: 600;
             color: #e91e63;
         }
 
-        .error 
+        .error
         {
             display: none;
             padding: 16px;
@@ -440,14 +440,14 @@
             animation: shake 0.5s;
         }
 
-        @keyframes shake 
+        @keyframes shake
         {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-5px); }
             40%, 80% { transform: translateX(5px); }
         }
 
-        #result 
+        #result
         {
             display: none;
             background: linear-gradient(135deg, rgba(233, 30, 99, 0.08), rgba(255, 87, 34, 0.08));
@@ -459,7 +459,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
-        #result h3 
+        #result h3
         {
             font-size: 24px;
             margin-bottom: 24px;
@@ -470,7 +470,7 @@
             gap: 10px;
         }
 
-        .result-item 
+        .result-item
         {
             display: flex;
             justify-content: space-between;
@@ -479,19 +479,19 @@
             border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
         }
 
-        .result-item:last-child 
+        .result-item:last-child
         {
             border-bottom: none;
         }
 
-        .result-label 
+        .result-label
         {
             font-size: 18px;
             color: #555;
             font-weight: 500;
         }
 
-        .result-value 
+        .result-value
         {
             font-size: 28px;
             font-weight: 800;
@@ -503,7 +503,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .footer 
+        .footer
         {
             text-align: center;
             margin-top: 32px;
@@ -513,42 +513,42 @@
             font-size: 15px;
         }
 
-        .footer strong 
+        .footer strong
         {
             color: #e91e63;
             font-weight: 700;
         }
 
-        @media (max-width: 650px) 
+        @media (max-width: 650px)
         {
-            .card 
+            .card
             {
                 padding: 24px;
                 margin: 16px;
             }
 
-            .card-header h1 
+            .card-header h1
             {
                 font-size: 28px;
             }
 
-            .subtitle 
+            .subtitle
             {
                 font-size: 16px;
             }
 
-            .input-wrapper input 
+            .input-wrapper input
             {
                 font-size: 16px;
             }
 
-            .calculate-btn, .reset-btn 
+            .calculate-btn, .reset-btn
             {
                 padding: 14px;
                 font-size: 16px;
             }
 
-            .result-value 
+            .result-value
             {
                 font-size: 24px;
                 min-width: 150px;
@@ -656,13 +656,12 @@
 </div>
 
 <script>
-    function createNeoflexElements() 
+    function createNeoflexElements()
     {
         const container = document.getElementById('neoflexElements');
-        const neoSymbols = 
+        const neoSymbols =
             [
             '{', '}', '<', '>', '[', ']', '(', ')',
-            '◇', '◈', '◆', '⬡', '⬢', '◉', '◎',
             '0', '1', '0', '1', '0', '1', '0', '1',
             '#', '@', '$', '~', '^', '|', '&', '*',
             'neo', 'flex', 'code', 'byte', 'data',
@@ -674,22 +673,22 @@
             'neo/flex', 'neo-flex', 'neo_flex',
             'AI', 'ML', 'DL', 'NN', 'API', 'SQL', 'JS', 'PY'
             ];
-        for (let i = 0; i < 50; i++) 
+        for (let i = 0; i < 50; i++)
         {
             const element = document.createElement('div');
             element.className = 'neoflex-element';
             const symbol = neoSymbols[Math.floor(Math.random() * neoSymbols.length)];
             element.textContent = symbol;
             let fontSize;
-            if (symbol.length > 5) 
+            if (symbol.length > 5)
             {
                 fontSize = Math.random() * 12 + 8;
-            } 
-            else if (symbol.length > 2) 
+            }
+            else if (symbol.length > 2)
             {
                 fontSize = Math.random() * 16 + 10;
-            } 
-            else 
+            }
+            else
             {
                 fontSize = Math.random() * 22 + 12;
             }
@@ -698,7 +697,7 @@
             element.style.top = `${Math.random() * 100}%`;
             element.style.animationDelay = `${Math.random() * 28}s`;
             element.style.animationDuration = `${Math.random() * 14 + 24}s`;
-            const colors = 
+            const colors =
                 [
                 '#e91e63', '#ff5722', '#ff9800', '#ffc107',
                 '#ff7043', '#ff5252', '#f44336', '#d84315',
@@ -710,29 +709,30 @@
         }
     }
 
-    window.addEventListener('DOMContentLoaded', () => 
-        {
+    window.addEventListener('DOMContentLoaded', () =>
+    {
         createNeoflexElements();
         const card = document.querySelector('.card');
-        card.addEventListener('mouseenter', () => 
+        card.addEventListener('mouseenter', () =>
+        {
+            document.querySelectorAll('.edge-animation').forEach(edge =>
             {
-            document.querySelectorAll('.edge-animation').forEach(edge => 
-                {
                 edge.style.animationPlayState = 'running';
-                });
+            });
         });
-        card.addEventListener('mouseleave', () => 
+        card.addEventListener('mouseleave', () =>
+        {
+            document.querySelectorAll('.edge-animation').forEach(edge =>
             {
-            document.querySelectorAll('.edge-animation').forEach(edge => 
-                {
                 edge.style.animationPlayState = 'paused';
-                });
+            });
         });
     });
 
+
     let currentRequest = null;
 
-    function calculate() 
+    function calculate()
     {
         const salary = document.getElementById('salary').value;
         const days = document.getElementById('days').value;
@@ -745,38 +745,42 @@
         const payResult = document.getElementById('payResult');
         const daysResult = document.getElementById('daysResult');
 
+
         resultDiv.style.display = 'none';
         errorDiv.style.display = 'none';
 
-        if (!salary || !days) 
+
+        if (!salary || !days)
         {
             showError('Пожалуйста, заполните зарплату и количество дней отпуска');
             return;
         }
 
-        if (parseFloat(salary) <= 0) 
+        if (parseFloat(salary) <= 0)
         {
             showError('Зарплата должна быть больше нуля');
             return;
         }
 
-        if (parseInt(days) <= 0) 
+        if (parseInt(days) <= 0)
         {
             showError('Количество дней должно быть больше нуля');
             return;
         }
 
+
         calculateBtn.disabled = true;
         loading.style.display = 'flex';
 
+
         let url = `/calculacte?averageSalary=${encodeURIComponent(salary)}&vacationDays=${encodeURIComponent(days)}`;
 
-        if (date) 
+        if (date)
         {
             url += `&startDate=${encodeURIComponent(date)}`;
         }
 
-        if (currentRequest) 
+        if (currentRequest)
         {
             currentRequest.abort();
         }
@@ -784,53 +788,53 @@
         const controller = new AbortController();
         currentRequest = controller;
 
-        fetch(url, 
-              {
-            method: 'GET',
-            headers: 
+        fetch(url,
             {
+            method: 'GET',
+            headers:
+                {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-            },
+                },
             signal: controller.signal
-             })
-            .then(response => 
+            })
+            .then(response =>
+            {
+                if (!response.ok)
                 {
-                if (!response.ok) 
-                {
-                    return response.json().then(data => 
-                        {
+                    return response.json().then(data =>
+                    {
                         throw new Error(data.message || `Ошибка сервера: ${response.status}`);
-                        });
+                    });
                 }
                 return response.json();
-                })
-            .then(data => 
-                {
+            })
+            .then(data =>
+            {
                 payResult.textContent = `${data.vacationPay.toFixed(2)} ₽`;
                 daysResult.textContent = data.actualWorkingDays || data.vacationDays;
 
                 resultDiv.style.display = 'block';
                 resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                })
-            .catch(error => 
-                {
+            })
+            .catch(error =>
+            {
                 if (error.name === 'AbortError') return;
 
                 console.error('Ошибка при расчёте:', error);
                 showError(error.message || 'Не удалось выполнить расчёт. Проверьте данные и попробуйте снова.');
-                })
-            .finally(() => 
-                {
+            })
+            .finally(() =>
+            {
                 calculateBtn.disabled = false;
                 loading.style.display = 'none';
                 currentRequest = null;
-                });
+            });
     }
 
-    function resetForm() 
+    function resetForm()
     {
-        if (currentRequest) 
+        if (currentRequest)
         {
             currentRequest.abort();
             currentRequest = null;
@@ -839,31 +843,36 @@
         document.getElementById('result').style.display = 'none';
         document.getElementById('error').style.display = 'none';
         document.getElementById('loading').style.display = 'none';
+
         document.getElementById('calculateBtn').disabled = false;
+
         document.getElementById('salary').value = '';
         document.getElementById('days').value = '';
         document.getElementById('date').value = '';
+
         document.getElementById('salary').focus();
 
         const resetBtn = document.querySelector('.reset-btn');
         resetBtn.style.transform = 'scale(0.95)';
-        setTimeout(() => 
-            {
+        setTimeout(() =>
+        {
             resetBtn.style.transform = 'scale(1)';
-            }, 200);
+        }, 200);
     }
 
-    function goBack() 
+    function goBack()
     {
-        if (currentRequest) 
+        if (currentRequest)
         {
             currentRequest.abort();
             currentRequest = null;
         }
 
         document.getElementById('result').style.display = 'none';
+
         document.getElementById('error').style.display = 'none';
         document.getElementById('loading').style.display = 'none';
+
         document.getElementById('calculateBtn').disabled = false;
 
         window.scrollTo({
@@ -874,44 +883,43 @@
         document.getElementById('salary').focus();
     }
 
-    function showError(message) 
+    function showError(message)
     {
         const errorDiv = document.getElementById('error');
         const errorMessage = document.getElementById('errorMessage');
         errorMessage.textContent = message;
         errorDiv.style.display = 'flex';
 
-        setTimeout(() => 
-            {
-            if (errorDiv.style.display === 'flex') 
+        setTimeout(() =>
+        {
+            if (errorDiv.style.display === 'flex')
             {
                 errorDiv.style.display = 'none';
             }
         }, 5000);
     }
 
-    document.addEventListener('keypress', function(event) 
+    document.addEventListener('keypress', function(event)
     {
-        if (event.key === 'Enter') 
+        if (event.key === 'Enter')
         {
-            if (document.activeElement !== document.querySelector('.reset-btn')) 
+            if (document.activeElement !== document.querySelector('.reset-btn'))
             {
                 calculate();
             }
         }
     });
 
-    document.addEventListener('DOMContentLoaded', () => 
+    document.addEventListener('DOMContentLoaded', () =>
+    {
+        setTimeout(() =>
         {
-        setTimeout(() => 
+            document.querySelectorAll('.edge-animation').forEach(edge =>
             {
-            document.querySelectorAll('.edge-animation').forEach(edge => 
-                {
                 edge.style.animationPlayState = 'running';
-                });
-         }, 500);
-        });
+            });
+        }, 500);
+    });
 </script>
 </body>
-        
 </html>
